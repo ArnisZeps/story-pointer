@@ -1,11 +1,13 @@
 import styled from "@emotion/styled";
 import { FC, useEffect, useState, useCallback, ChangeEvent } from "react";
+import { useParams } from 'react-router-dom';
 import Footer from "../../organisms/footer";
 import Header from "../../organisms/header";
 import Canvas from "../canvas";
 import TextField from "../../molecules/textField";
 import Button from "../../molecules/button";
 import TextLabel from "../../molecules/textLabel";
+import { handleApi } from "../../../api/api";
 
 const NameForm = styled.div`
   position: absolute;
@@ -100,19 +102,51 @@ const InputContainer = styled.div`
 const Session: FC = () => {
   const [hasName, setHasName] = useState(true);
   const [name, setName] = useState("");
-  const setNameSessionStorage = useCallback(() => {
+
+  const handleNameSave = useCallback(() => {
     sessionStorage.setItem("name", name);
     setHasName(true);
+
+    const addUserToSession = async () => {
+      const { userId } = await handleApi({ 
+        path: "/user", 
+        method: "POST", 
+        body: {
+          userName: name
+        } 
+      });
+
+      await handleApi({ 
+        path: "/session/user", 
+        method: "POST", 
+        body: {
+          sessionId,
+          userId
+        } 
+      });
+    }
+
+    addUserToSession();
   }, [name]);
+  let { sessionId } = useParams();
 
-  // const handleNameInput = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-  //   setName(e.target.value)
-  //   console.log(name)
-  // }, []);
+  const handleNameInput = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value)
+    console.log(name)
+    console.log(sessionId)
+    
+  }, [name, sessionId]);
 
-  const handleNameInput = (e: ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
-  };
+  // const handleNameInput = async (e: ChangeEvent<HTMLInputElement>) => {
+  //   setName(e.target.value);
+  //   const { sessionId } = await handleApi({ 
+  //     path: "/session", 
+  //     method: "POST", 
+  //     body: {
+  //       userId
+  //     } 
+  //   });
+  // };
 
   useEffect(() => {
     const currentName = sessionStorage.getItem("name");
@@ -121,7 +155,7 @@ const Session: FC = () => {
     } else {
       setHasName(true);
     }
-  }, [setNameSessionStorage, handleNameInput, name, hasName, setHasName]);
+  }, [handleNameSave, handleNameInput, name, hasName, setHasName]);
 
   return (
     <>
@@ -132,7 +166,7 @@ const Session: FC = () => {
             <InputContainer>
               <TextField placeholder="NAME" name="name" handleChange={handleNameInput} />
             </InputContainer>
-            <Button text="JOIN SESSION" type="submit" onClick={setNameSessionStorage} />
+            <Button text="JOIN SESSION" type="submit" onClick={handleNameSave} />
           </div>
         </NameForm>
       )}

@@ -18,15 +18,20 @@ const SessionCreatePage: FC = () => {
     const { value } = target[0];
 
     // call backebd
-    const sessionId = uuidv4();
-    const resp = await handleApi({ 
-      path: "session", 
+    const { userId } = await handleApi({ 
+      path: "/user", 
       method: "POST", 
       body: {
         userName: value
       } 
     });
-    console.log(resp);
+    const { sessionId } = await handleApi({ 
+      path: "/session", 
+      method: "POST", 
+      body: {
+        userId
+      } 
+    });
     return navigate(`/${sessionId}?name=${value}`);
   };
 
