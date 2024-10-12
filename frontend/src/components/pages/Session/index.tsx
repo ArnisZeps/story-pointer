@@ -102,6 +102,7 @@ const InputContainer = styled.div`
 const Session: FC = () => {
   const [hasName, setHasName] = useState(true);
   const [name, setName] = useState("");
+  let { sessionId } = useParams();
 
   const handleNameSave = useCallback(() => {
     sessionStorage.setItem("name", name);
@@ -127,8 +128,7 @@ const Session: FC = () => {
     }
 
     addUserToSession();
-  }, [name]);
-  let { sessionId } = useParams();
+  }, [name, sessionId]);
 
   const handleNameInput = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value)
@@ -136,17 +136,6 @@ const Session: FC = () => {
     console.log(sessionId)
     
   }, [name, sessionId]);
-
-  // const handleNameInput = async (e: ChangeEvent<HTMLInputElement>) => {
-  //   setName(e.target.value);
-  //   const { sessionId } = await handleApi({ 
-  //     path: "/session", 
-  //     method: "POST", 
-  //     body: {
-  //       userId
-  //     } 
-  //   });
-  // };
 
   useEffect(() => {
     const currentName = sessionStorage.getItem("name");
