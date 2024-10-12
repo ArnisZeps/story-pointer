@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import routes from "./routes/index.mjs"
+import routes from "./routes/index.js"
 import cors from "cors";
 import express from "express";
 
