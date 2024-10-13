@@ -32,7 +32,14 @@ const SessionCreatePage: FC = () => {
         userId
       } 
     });
-    return navigate(`/${sessionId}?name=${value}`);
+
+    const socket = new WebSocket(`ws://localhost:8080?sessionId=${sessionId}`);
+    console.log(socket)
+    socket.addEventListener('message', (event) => {
+      console.log(event)
+    });
+
+    // return navigate(`/${sessionId}?name=${value}`);
   };
 
   return (

@@ -7,7 +7,6 @@ const router = express.Router();
 
 router.post("/user", async (req, res) => {
     try {
-      console.log("req");
       const {
         body: { userName },
       } = req;
@@ -29,7 +28,6 @@ router.post("/user", async (req, res) => {
 
 router.post("/session", async (req, res) => {
   try {
-    console.log("req");
     const {
       body: { userId },
     } = req;
@@ -51,7 +49,6 @@ router.post("/session", async (req, res) => {
 
 router.post("/session/user", async (req, res) => {
     try {
-      console.log("req");
       const {
         body: { userId,sessionId },
       } = req;
