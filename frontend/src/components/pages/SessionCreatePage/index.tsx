@@ -39,7 +39,7 @@ const SessionCreatePage: FC = () => {
       console.log(event)
     });
 
-    // return navigate(`/${sessionId}?name=${value}`);
+    return navigate(`/${sessionId}?name=${value}`);
   };
 
   return (

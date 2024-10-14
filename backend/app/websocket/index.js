@@ -1,5 +1,4 @@
 import { WebSocketServer } from "ws";
-
 import url from "url";
 export const WSS_SERVER = new WebSocketServer({ port: 8080 });
 export const CONNECTION_MAP = {};
@@ -7,16 +6,13 @@ export const CONNECTION_MAP = {};
 const websocketInit = () => {
   WSS_SERVER.on("connection", (ws, incomingRequest) => {
     const parsedUrl = url.parse(incomingRequest.url, true);
-    let sessionId;
-    if (typeof parsedUrl.query === "string") {
-      const queryParts = parsedUrl.query.split("=");
-      if (queryParts[0] === "sessionId") {
-        sessionId = queryParts[1];
-      }
-    } else {
-      sessionId = parsedUrl.query.sessionId; // If parsed correctly as an object
-    }
-    CONNECTION_MAP[sessionId] = [...CONNECTION_MAP[sessionId] || [], ws];
+    // Construct URL object
+    const requestUrl = new URL(incomingRequest.url, `http://${incomingRequest.headers.host}`);
+
+    // Assuming session ID is passed as a query parameter, for example: ?sessionId=12345
+    const sessionId = requestUrl.searchParams.get("sessionId");
+
+    console.log("Session ID:", sessionId);
     // Event listener for incoming messages
     // ws.on('message', (message) => {
     //   console.log('Received message:', message.toString());
