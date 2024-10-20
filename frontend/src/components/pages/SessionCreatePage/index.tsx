@@ -15,14 +15,12 @@ const SessionCreatePage: FC = () => {
   const handleCreation = async (event: any) => {
     event.preventDefault();
     const { target } = event;
-    const { value } = target[0];
-
-    // call backebd
+    const { value: name } = target[0];
     const { userId } = await handleApi({ 
       path: "/user", 
       method: "POST", 
       body: {
-        userName: value
+        userName: name
       } 
     });
     const { sessionId } = await handleApi({ 
@@ -32,14 +30,8 @@ const SessionCreatePage: FC = () => {
         userId
       } 
     });
-
-    const socket = new WebSocket(`ws://localhost:8080?sessionId=${sessionId}`);
-    console.log(socket)
-    socket.addEventListener('message', (event) => {
-      console.log(event)
-    });
-
-    return navigate(`/${sessionId}?name=${value}`);
+    sessionStorage.setItem("name", name)
+    return navigate(`/${sessionId}`);
   };
 
   return (
