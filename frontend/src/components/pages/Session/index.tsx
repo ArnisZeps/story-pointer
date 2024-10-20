@@ -11,15 +11,16 @@ import { handleApi } from "../../../api/api";
 const Session: FC = () => {
   const [hasName, setHasName] = useState(false);
   const [nameInput, setNameInput] = useState("");
-  const [userList, setUserList] = useState([])
+  const [userList, setUserList] = useState<string[]>([])
   let { sessionId } = useParams();
 
   useEffect(() => {
     const socket = new WebSocket(
       `ws://localhost:8080?sessionId=${sessionId}`
     );
-    socket.addEventListener("message", (event) => {
-      console.log(event);
+    socket.addEventListener("message", ({ data }) => {
+      const { userName } = JSON.parse(data);
+      setUserList((prev) => [...prev, userName])
     });
     const name = sessionStorage.getItem("name");
     if (name) {
@@ -104,7 +105,7 @@ const Session: FC = () => {
           <S.ResultsGrid>
             <div>RESULTS</div>
             {
-              userList.map((user) => <div>${user}: ?</div>)
+              userList.map((user, index) => <div key={index}>{user}: ?</div>)
             }
             <div>AVARAGE: 123</div>
           </S.ResultsGrid>
