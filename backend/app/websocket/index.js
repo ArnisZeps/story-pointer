@@ -1,4 +1,4 @@
-import { WebSocketServer } from "ws";
+import WebSocket, { WebSocketServer } from "ws";
 import url from "url";
 export const WSS_SERVER = new WebSocketServer({ port: 8080 });
 export const CONNECTION_MAP = {};
@@ -28,14 +28,8 @@ const websocketInit = () => {
     //     }
     //   });
     // });
-    this.WSS_SERVER.clients.forEach((client) => {
-      if (client.readyState === WebSocket.OPEN) {
-        client.send("message.toString()");
-        console.log("client", JSON.stringify(client));
-      }
-    });
     // Event listener for client disconnection
-    console.log("clients count ", this.WSS_SERVER.clients.size);
+    console.log("clients count ", WSS_SERVER.clients.size);
     ws.on("close", () => {
       console.log("A client disconnected.");
     });

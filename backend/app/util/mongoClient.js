@@ -11,6 +11,13 @@ export const insertOne = async ({ collectionName, params }) => {
   return await collection.insertOne(params);
 };
 
+export const findOne = async ({ collectionName, documentId }) => {
+  await client.connect();
+  const db = client.db(DB_NAME);
+  const collection = db.collection(collectionName);
+  return await collection.findOne(documentId);
+};
+
 export const updateOne = async ({ collectionName, documentId, params }) => {
   await client.connect();
   const db = client.db(DB_NAME);

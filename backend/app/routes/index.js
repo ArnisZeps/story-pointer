@@ -52,7 +52,7 @@ router.post("/session/user", async (req, res) => {
       const {
         body: { userId,sessionId },
       } = req;
-      const resp = await addUserToSession({ userId, sessionId })
+      const resp = await addUserToSession({ userId, sessionId });
       res.set({
         "Content-Type": "application/json",
       });
