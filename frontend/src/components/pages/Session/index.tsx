@@ -61,7 +61,7 @@ const Session: FC = () => {
   return (
     <>
       <Header />
-      {hasName || (
+      {(
         <S.NameForm>
           <div>
             <TextLabel text="ENTER YOUR NAME" />
