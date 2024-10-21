@@ -3,7 +3,7 @@ services:
   frontend:
     build: ./frontend  # Dockerfile for React.js exists in the frontend directory
     ports:
-      - "3000:3000"
+      - "3000:80"
     environment:
       - NODE_ENV=PROD
     depends_on:
