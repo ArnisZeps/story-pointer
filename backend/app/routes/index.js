@@ -1,37 +1,39 @@
-import 'dotenv/config'
+import "dotenv/config";
 import express from "express";
-import createUser from '../src/createUser.js';
-import createSession from '../src/createSession.js';
-import addUserToSession from '../src/addUserToSession.js';
+import createUser from "../src/createUser.js";
+import createSession from "../src/createSession.js";
+import addUserToSession from "../src/addUserToSession.js";
+import addEvaluation from "../src/addEvaluation.js";
+
 const router = express.Router();
 
 router.post("/user", async (req, res) => {
-    try {
-      const {
-        body: { userName },
-      } = req;
-      const { insertedId: userId } = await createUser({ userName })
-      res.set({
-        "Content-Type": "application/json",
-      });
-      res.status(200).send({
-        userId,
-      });
-    } catch (err) {
-      console.log(err)
-      res.status(500).send({
-        info: "Request failed",
-        trace: err.message,
-      });
-    }
-  });
+  try {
+    const {
+      body: { userName },
+    } = req;
+    const { insertedId: userId } = await createUser({ userName });
+    res.set({
+      "Content-Type": "application/json",
+    });
+    res.status(200).send({
+      userId,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({
+      info: "Request failed",
+      trace: err.message,
+    });
+  }
+});
 
 router.post("/session", async (req, res) => {
   try {
     const {
       body: { userId },
     } = req;
-    const { insertedId: sessionId } = await createSession({ userId })
+    const { insertedId: sessionId } = await createSession({ userId });
     res.set({
       "Content-Type": "application/json",
     });
@@ -39,7 +41,7 @@ router.post("/session", async (req, res) => {
       sessionId,
     });
   } catch (err) {
-    console.log(err)
+    console.log(err);
     res.status(500).send({
       info: "Request failed",
       trace: err.message,
@@ -48,26 +50,46 @@ router.post("/session", async (req, res) => {
 });
 
 router.post("/session/user", async (req, res) => {
-    try {
-      const {
-        body: { userId,sessionId },
-      } = req;
-      const resp = await addUserToSession({ userId, sessionId });
-      res.set({
-        "Content-Type": "application/json",
-      });
-      res.status(200).send({
-        ...resp,
-      });
-    } catch (err) {
-      console.log(err)
-      res.status(500).send({
-        info: "Request failed",
-        trace: err.message,
-      });
-    }
-  });
+  try {
+    const {
+      body: { userId, sessionId },
+    } = req;
+    const resp = await addUserToSession({ userId, sessionId });
+    res.set({
+      "Content-Type": "application/json",
+    });
+    res.status(200).send({
+      ...resp,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({
+      info: "Request failed",
+      trace: err.message,
+    });
+  }
+});
 
+router.post("/session/evaluation", async (req, res) => {
+  try {
+    const {
+      body: { userId, sessionId, evaluation },
+    } = req;
+    const resp = await addEvaluation({ userId, sessionId, evaluation });
+    res.set({
+      "Content-Type": "application/json",
+    });
+    res.status(200).send({
+      ...resp,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({
+      info: "Request failed",
+      trace: err.message,
+    });
+  }
+});
 // router.post("/session/user", async (req, res) => {
 //   try {
 //     const {

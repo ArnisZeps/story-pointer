@@ -30,6 +30,7 @@ const SessionCreatePage: FC = () => {
         userId
       } 
     });
+    sessionStorage.setItem("userId", userId)
     sessionStorage.setItem("name", name)
     return navigate(`/${sessionId}`);
   };

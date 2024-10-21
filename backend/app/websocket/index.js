@@ -2,7 +2,7 @@ import WebSocket, { WebSocketServer } from "ws";
 import url from "url";
 export const WSS_SERVER = new WebSocketServer({ port: 8080 });
 export const CONNECTION_MAP = {};
-
+console.log(WSS_SERVER.address(), WSS_SERVER.port)
 const websocketInit = () => {
   WSS_SERVER.on("connection", (ws, incomingRequest) => {
     const parsedUrl = url.parse(incomingRequest.url, true);

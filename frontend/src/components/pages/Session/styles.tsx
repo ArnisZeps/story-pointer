@@ -68,7 +68,7 @@ export const Grid = styled.div`
   padding: 10px;
 `;
 
-export const GridItem = styled.div`
+export const GridItem = styled.button`
   padding: 20px;
   overflow-wrap: break-word;
   font-size: 16px;
