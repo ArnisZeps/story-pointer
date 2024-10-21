@@ -1,8 +1,8 @@
 import "dotenv/config";
 import { MongoClient, ObjectId } from "mongodb";
-const { MONGO_URL } = process.env;
+const { MONGO_URL_DEV, MONGO_URL_PROD, NODE_ENV } = process.env;
 const DB_NAME = "STORY_POINT_MAIN";
-const client = new MongoClient(MONGO_URL);
+const client = new MongoClient(NODE_ENV === "PROD" ? MONGO_URL_PROD : MONGO_URL_DEV);
 
 export const insertOne = async ({ collectionName, params }) => {
   await client.connect();

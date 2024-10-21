@@ -5,7 +5,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=PROD
     depends_on:
       - backend
     networks:
@@ -16,7 +16,7 @@ services:
     ports:
       - "4000:4000"
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=PROD
       - MONGO_URL=mongodb://mongo:27017/mydatabase  # MongoDB connection string
     depends_on:
       - mongo
