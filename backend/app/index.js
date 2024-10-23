@@ -9,7 +9,7 @@ const { PORT } = process.env;
 app.listen(PORT);
 app.use(
   cors({
-    origin: "https://storypointer.xyz", // Allow the frontend URL
+    origin: ["http://localhost:3000", "https://storypointer.xyz"], // Allow the frontend URL
     credentials: true,
   }),
 );
