@@ -38,7 +38,7 @@ services:
     # restart: unless-stopped
     image: nginx
     depends_on:
-      - certbot
+      # - certbot
       - frontend
     ports:
         - 80:80
