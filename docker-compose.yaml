@@ -1,9 +1,8 @@
 version: "3"
 services:
   frontend:
+    container_name: frontend
     build: ./frontend  # Dockerfile for React.js exists in the frontend directory
-    ports:
-      - "80:80"
     environment:
       - NODE_ENV=PROD
     depends_on:
@@ -34,6 +33,32 @@ services:
     networks:
       - app-network
 
+  nginx:
+    container_name: nginx
+    # restart: unless-stopped
+    image: nginx
+    depends_on:
+      - frontend
+    ports:
+        - 80:80
+        - 443:443
+    volumes:
+        - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+        - ./certbot/conf:/etc/letsencrypt
+        - ./certbot/www:/var/www/certbot  
+    networks:
+      - app-network
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes: 
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    command: certonly --webroot -w /var/www/certbot --force-renewal --email zeps.arnis@gmail.com -d storypointer.xyz --agree-tos
+    networks:
+      - app-network
+      
 volumes:
   mongo-data:
 
