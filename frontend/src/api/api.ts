@@ -35,6 +35,6 @@ async function callApi({ url, settings }: { url: string, settings: any }) {
 }
 
 export const handleApi = ({ path, method, body = null }: { path: string, method: string, body: any }) => {
-  const url = `https://storypointer.xyz:4000${path}`
+  const url = `https://storypointer.xyz/api${path}`
   return callApi({ url, settings: apiSettingsMaker({ method, body: JSON.stringify(body) }) });
 };
