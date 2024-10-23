@@ -38,7 +38,7 @@ services:
     # restart: unless-stopped
     image: nginx
     depends_on:
-      - frontend
+      - certbot
     ports:
         - 80:80
         - 443:443
@@ -58,7 +58,7 @@ services:
     command: certonly --webroot -w /var/www/certbot --force-renewal --email zeps.arnis@gmail.com -d storypointer.xyz --agree-tos
     networks:
       - app-network
-      
+
 volumes:
   mongo-data:
 
