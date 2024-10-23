@@ -51,6 +51,7 @@ services:
       - app-network
 
   certbot:
+    profiles: ["ssl"]
     image: certbot/certbot
     container_name: certbot
     volumes: 
