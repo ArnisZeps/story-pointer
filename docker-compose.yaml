@@ -7,6 +7,8 @@ services:
       - NODE_ENV=PROD
     ports:
       - "8000:8000"
+    volumes:
+      - ./build:/usr/share/nginx/html
     depends_on:
       - backend
     networks:
