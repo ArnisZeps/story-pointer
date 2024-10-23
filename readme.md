@@ -46,3 +46,5 @@ To quickly launch the application, follow these steps:
     cd backend
     npm start
     ```
+
+    ssh root@165.232.127.229

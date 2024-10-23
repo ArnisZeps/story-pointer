@@ -18,7 +18,7 @@ const Session: FC = () => {
 
   useEffect(() => {
     try {
-      const socket = new WebSocket(`ws://storypointer.xyz:8080?sessionId=${sessionId}`);
+      const socket = new WebSocket(`wss://storypointer.xyz/websocket?sessionId=${sessionId}`);
       socket.addEventListener("message", (event) => {
         console.log(event);
         const { data } = event;
